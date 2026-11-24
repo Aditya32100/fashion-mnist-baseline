@@ -39,22 +39,18 @@ for epoch in range(3):
 
 
 #testing loop
+model.eval()# switches layers that behave differently during train and test, standard practice but doesnt matter for this model
 correct = 0
-for x, y in test_loader:
-    out = model(x)
-    pred = out.argmax( dim = 1)
-    correct += (pred == y).sum().item()#replaces the previous prints
+with torch.no_grad():
+    for x, y in test_loader:
+        out = model(x)
+        pred = out.argmax( dim = 1)
+        correct += (pred == y).sum().item()#replaces the previous prints
      #look at one batch w break, to go through 10 its the accuracy loop
+        
+
+
 
 accuracy = correct/len(test_data)
-print(accuracy)
+print("Test accuracy:" ,accuracy)
 
-pred = out.argmax(dim=1)
-print(pred.shape)
-print(pred[:5])
-print(y[:5])
-
-
-#counting snippet
-print((pred == y)[:5])
-print((pred == y).sum().item()) #makes new tensor and check if outputs are true with preidictions
